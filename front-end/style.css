@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;700&display=swap');
+
+:root {
+    --primary-color: #000;
+    --bg-color: #fff;
+    --border-color: #eee;
+    --font-logo: 'Playfair Display', serif;
+    --font-body: 'Montserrat', sans-serif;
+}
+
+body { margin: 0; padding: 0; font-family: var(--font-body); background-color: var(--bg-color); overflow-x: hidden; color: #1a1a1a; }
+
+/* 상단 네비게이션 */
+.top-nav { position: absolute; top: 30px; right: 60px; z-index: 100; display: flex; align-items: center; }
+.search-container { display: flex; align-items: center; border-bottom: 1px solid #000; margin-right: 25px; padding-bottom: 2px; }
+.search-input { border: none; outline: none; font-size: 11px; width: 130px; text-transform: uppercase; letter-spacing: 1px; }
+.login-btn { text-decoration: none; color: #000; font-size: 12px; font-weight: 700; text-transform: uppercase; cursor: pointer; }
+
+header { text-align: center; padding: 100px 0 80px 0; }
+.logo { font-family: var(--font-logo); font-size: 85px; text-decoration: none; color: #000; letter-spacing: -3px; }
+
+/* 레이아웃 */
+.wrapper { display: flex; max-width: 1400px; margin: 0 auto; gap: 80px; padding: 0 40px; }
+
+/* 사이드바 (여백 및 폰트 고정) */
+.sidebar { width: 160px; flex-shrink: 0; position: sticky; top: 50px; height: fit-content; }
+.menu-item-container { margin-bottom: 25px; }
+.menu-item { display: block; text-decoration: none; color: #000; font-size: 14px; font-weight: 400; padding-bottom: 10px; border-bottom: 1px solid #000; text-transform: uppercase; letter-spacing: 1px; }
+.submenu { list-style: none; padding: 12px 0 0 10px; margin: 0; display: none; }
+.menu-item-container:hover .submenu { display: block; }
+.submenu li a { text-decoration: none; color: #888; font-size: 11px; display: block; padding: 6px 0; transition: 0.2s; }
+.submenu li a:hover { color: #000; transform: translateX(5px); }
+
+/* 메인 콘텐츠 - 여백의 미 극대화 (4*5 레이아웃 축소) */
+.main-content { flex: 1; padding-bottom: 150px; }
+.product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 50px 30px; }
+.product-card { text-decoration: none; color: #000; transition: 0.4s; text-align: left; }
+.product-card:hover { transform: translateY(-10px); }
+.product-image-box { background-color: #f9f9f9; aspect-ratio: 1 / 1.4; overflow: hidden; margin-bottom: 15px; border: 1px solid #f0f0f0; }
+.product-image-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; filter: grayscale(20%); }
+.product-card:hover img { transform: scale(1.05); filter: grayscale(0%); }
+.product-info h3 { font-size: 11px; margin: 10px 0 5px 0; font-weight: 700; letter-spacing: 0.5px; color: #333; }
+.product-info p { font-size: 11px; color: #999; margin: 0; font-weight: 400; }
+
+/* 상세페이지 프리미엄 슬라이더 */
+.detail-container { display: flex; gap: 80px; align-items: flex-start; }
+.product-detail-left { flex: 0.6; } /* 이미지 더 작게 조정 */
+.fitting-panel-right { flex: 1; background: #fff; border: 1px solid #000; padding: 40px; position: sticky; top: 50px; }
+.fitting-header h3 { font-family: var(--font-logo); font-size: 26px; margin: 0 0 30px 0; border-bottom: 1px solid #000; padding-bottom: 15px; }
+
+/* 슬라이더 커스텀 디자인 */
+.control-group { margin-bottom: 30px; }
+.control-label { display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+input[type="range"] { 
+    -webkit-appearance: none; width: 100%; height: 2px; background: #e0e0e0; outline: none; margin: 20px 0;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 40px; height: 12px; background: #000; cursor: pointer; border-radius: 0; transition: 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb:hover { background: #555; width: 50px; }
+
+/* 챗봇 리모델링 (아이콘 & 윈도우) */
+.chatbot-container { position: fixed; bottom: 40px; right: 50px; z-index: 1000; }
+.chatbot-icon { 
+    width: 65px; height: 65px; background: #000; color: #fff; border-radius: 20px 20px 0 20px; 
+    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; 
+    cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: 0.3s;
+}
+.chatbot-icon:hover { transform: scale(1.1) rotate(-5deg); }
+
+.chat-window { 
+    display: none; position: absolute; bottom: 85px; right: 0; width: 350px; height: 500px; 
+    background: #fff; border: 1px solid #000; flex-direction: column; overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15); animation: fadeIn 0.3s;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.chat-header { background: #000; color: #fff; padding: 20px; font-weight: 700; font-size: 14px; letter-spacing: 1px; }
+.chat-messages { flex: 1; padding: 20px; overflow-y: auto; font-size: 13px; background: #fbfbfb; color: #444; line-height: 1.6; }
+.chat-input { padding: 20px; display: flex; gap: 10px; border-top: 1px solid #eee; background: #fff; }
+.chat-input input { flex: 1; border: 1px solid #eee; padding: 12px; outline: none; font-size: 12px; }
+.chat-send-btn { background: #000; color: #fff; border: none; padding: 0 20px; cursor: pointer; font-weight: 700; font-size: 11px; }
+
+/* 모달 공통 */
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+.instruction-modal, .login-modal { background: #fff; padding: 50px; border: 1px solid #000; width: 380px; position: relative; text-align: center; }
+.close-x { position: absolute; top: 20px; right: 25px; font-size: 28px; cursor: pointer; }
+.action-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+.btn-main { background: #000; color: #fff; border: none; padding: 18px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 12px; letter-spacing: 1px; }
+.btn-sub { background: #fff; color: #000; border: 1px solid #000; padding: 15px; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 11px; }
+.upload-zone { border: 1px dashed #ccc; height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fafafa; margin-bottom: 30px; cursor: pointer; transition: 0.3s; }
+.upload-zone:hover { background: #f0f0f0; border-color: #000; }
