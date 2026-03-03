@@ -1,0 +1,10 @@
+{
+  "name": "fitting-space-room",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx serve front-end"
+  },
+  "dependencies": {
+    "serve": "^14.0.0"
+  }
+}
