@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Fitting Studio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-left"><a href="index.html" class="nav-text-btn">← BACK TO SHOP</a></div>
+    </nav>
+
+    <header style="padding: 40px 0 20px 0;">
+        <a href="index.html" class="logo" style="font-size: 40px;">Fitting Space Studio</a>
+    </header>
+
+    <div class="wrapper" style="max-width: 1400px; justify-content: center;">
+        <div class="studio-layout">
+            
+            <div class="studio-left">
+                <div class="section-title">LIVE TRY-ON</div>
+                <div class="camera-container">
+                    <div class="camera-box">
+                        <div class="camera-label">Input Camera</div>
+                        <video id="inputCamera" autoplay playsinline muted></video>
+                    </div>
+                    <div class="camera-box" style="background:#f4f4f4;">
+                        <div class="camera-label">De-CART Output</div>
+                        <img id="outputCamera" src="" style="display:none;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top:5px;">
+                    <button class="btn-sub" style="flex:1;" onclick="toggleCamera()">CAMERA ON/OFF</button>
+                    <button class="btn-main" style="flex:1;" onclick="startRealtimeFit()">RUN De-CART</button>
+                </div>
+                
+                <div class="section-title" style="margin-top: 20px;">TARGET PRODUCT CODE</div>
+                <div class="product-input-box">
+                    <input type="text" placeholder="e.g. ZARA_TOP_001">
+                    <button class="btn-main" style="padding: 0 30px;">APPLY</button>
+                </div>
+            </div>
+
+            <div class="studio-right">
+                <div class="section-title">ANALYSIS SUMMARY</div>
+                <div class="dashboard-cards">
+                    <div class="dash-card">
+                        <span>Body Shape</span>
+                        <strong>Inverted Triangle</strong>
+                    </div>
+                    <div class="dash-card">
+                        <span>Face Shape</span>
+                        <strong>Oval</strong>
+                    </div>
+                    <div class="dash-card">
+                        <span>Emotion</span>
+                        <strong>Neutral</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

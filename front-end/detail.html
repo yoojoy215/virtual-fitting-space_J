@@ -2,19 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitting Space | AI Fitting</title>
+    <title>Fitting Space | AI Try-On</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav class="top-nav">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="SEARCH">
+        <div class="nav-left">
+            <a href="studio.html" class="nav-btn-studio">AI FITTING STUDIO</a>
         </div>
-        <a href="#" class="login-btn" onclick="openLoginModal()">LOG IN</a>
+        <div class="nav-right">
+            <div class="search-container"><input type="text" class="search-input" placeholder="SEARCH"></div>
+            <a href="#" class="nav-text-btn">FAVORITES</a>
+            <a href="#" class="nav-text-btn">LOG IN</a>
+        </div>
     </nav>
 
-    <header style="padding: 60px 0 40px 0;">
+    <header style="padding: 60px 0 30px 0;">
         <a href="index.html" class="logo" style="font-size: 50px;">Fitting Space</a>
     </header>
 
@@ -22,38 +25,41 @@
         <aside class="sidebar">
             <div class="menu-item-container"><a href="#" class="menu-item">MEN</a></div>
             <div class="menu-item-container"><a href="#" class="menu-item">WOMEN</a></div>
-            <div class="menu-item-container"><a href="#" class="menu-item">KIDS</a></div>
         </aside>
 
         <main class="main-content">
             <div class="detail-container">
                 <div class="product-detail-left">
                     <img id="detailMainImg" src="" alt="Product" style="width:100%; border:1px solid #eee;">
-                    <h2 id="detailTitle" style="font-family:var(--font-logo); font-size:32px; margin:30px 0 10px 0;"></h2>
+                    <div class="title-row">
+                        <h2 id="detailTitle" style="font-family:var(--font-logo); font-size:28px; margin:0;"></h2>
+                    </div>
                     <p id="detailPrice" style="color:#888; letter-spacing:1px;"></p>
                 </div>
                 
                 <div class="fitting-panel-right">
                     <div class="fitting-header">
-                        <h3>AI VIRTUAL FIT <span onclick="openModal()" style="font-size:11px; text-decoration:underline; font-weight:normal; cursor:pointer; float:right; margin-top:10px;">Guide</span></h3>
+                        <h3>AI VIRTUAL TRY-ON <span style="font-size:11px; float:right; cursor:pointer;">Guide</span></h3>
                     </div>
                     
-                    <div class="upload-zone">
-                        <span style="font-size:40px;">+</span>
-                        <p style="font-size:10px; font-weight:700; margin-top:15px; letter-spacing:1px;">UPLOAD FULL-BODY PHOTO</p>
+                    <button class="btn-sub" style="width:100%; margin-bottom:15px;" onclick="document.getElementById('photoUpload').click()">📷 UPLOAD PHOTO</button>
+                    <input type="file" id="photoUpload" hidden accept="image/*" onchange="previewUpload(this)">
+
+                    <div id="outputZone" class="upload-zone">
+                        <p style="font-size:11px; color:#888;">Your virtual fit will appear here</p>
                     </div>
 
                     <div class="control-group">
-                        <div class="control-label"><span>Horizontal Rotation</span><span>0°</span></div>
-                        <input type="range" min="-180" max="180" value="0">
+                        <div class="control-label"><span>Horizontal Rotation</span><span id="horizVal">0°</span></div>
+                        <input type="range" min="-180" max="180" value="0" oninput="document.getElementById('horizVal').innerText = this.value + '°'">
                     </div>
                     <div class="control-group">
-                        <div class="control-label"><span>Vertical Tilt</span><span>0°</span></div>
-                        <input type="range" min="-180" max="180" value="0">
+                        <div class="control-label"><span>Vertical Tilt</span><span id="vertVal">0°</span></div>
+                        <input type="range" min="-180" max="180" value="0" oninput="document.getElementById('vertVal').innerText = this.value + '°'">
                     </div>
 
                     <div class="action-btns">
-                        <button class="btn-main" style="grid-column: span 2;">GENERATE AI FITTING</button>
+                        <button class="btn-main" style="grid-column: span 2;" onclick="generateTryOn()">GENERATE AI FITTING</button>
                         <button class="btn-sub">SAVE</button>
                         <button class="btn-sub">SHARE</button>
                     </div>
@@ -61,20 +67,6 @@
             </div>
         </main>
     </div>
-
-    <div class="modal-overlay" id="infoModal">
-        <div class="instruction-modal">
-            <span class="close-x" onclick="closeModal()">&times;</span>
-            <h4 style="font-family:var(--font-logo); font-size:24px;">How it works</h4>
-            <p style="font-size:13px; color:#666; line-height:2; margin:30px 0;">1. Upload your photo<br>2. Adjust the 3D sliders<br>3. Generate your virtual fit</p>
-            <button class="btn-main" onclick="closeModal()">GOT IT</button>
-        </div>
-    </div>
-
-    <div class="chatbot-container">
-        <div class="chatbot-icon" onclick="toggleChatbot()">FitMate</div>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>

@@ -2,17 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitting Space | AI Virtual Fitting SaaS</title>
+    <title>Fitting Space | AI Virtual Fitting</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav class="top-nav">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="SEARCH COLLECTION">
-            <button class="search-btn" style="background:none; border:none; cursor:pointer;">🔍</button>
+        <div class="nav-left">
+            <a href="studio.html" class="nav-btn-studio">AI FITTING STUDIO</a>
         </div>
-        <a href="#" class="login-btn" onclick="openLoginModal()">LOG IN</a>
+        <div class="nav-right">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="SEARCH">
+            </div>
+            <a href="#" class="nav-text-btn">FAVORITES</a>
+            <a href="#" class="nav-text-btn" onclick="openLoginModal()">LOG IN</a>
+        </div>
     </nav>
 
     <header>
@@ -21,52 +25,37 @@
 
     <div class="wrapper">
         <aside class="sidebar">
-            <div class="menu-item-container">
-                <a href="#" class="menu-item">MEN</a>
-                <ul class="submenu">
-                    <li><a href="#">TOPS</a></li>
-                    <li><a href="#">BOTTOMS</a></li>
-                    <li><a href="#">ACCESSORIES</a></li>
-                </ul>
-            </div>
-            <div class="menu-item-container">
-                <a href="#" class="menu-item">WOMEN</a>
-                <ul class="submenu">
-                    <li><a href="#">DRESSES</a></li>
-                    <li><a href="#">TOPS</a></li>
-                    <li><a href="#">BEST SELLERS</a></li>
-                </ul>
-            </div>
-            <div class="menu-item-container">
-                <a href="#" class="menu-item">KIDS</a>
-            </div>
+            <div class="menu-item-container"><a href="#" class="menu-item">MEN</a></div>
+            <div class="menu-item-container"><a href="#" class="menu-item">WOMEN</a></div>
+            <div class="menu-item-container"><a href="#" class="menu-item">KIDS</a></div>
         </aside>
-
         <main class="main-content">
             <div class="product-grid"></div>
         </main>
     </div>
 
-    <div class="modal-overlay" id="loginModal">
-        <div class="login-modal">
-            <span class="close-x" onclick="closeLoginModal()">&times;</span>
-            <h2 style="font-family:var(--font-logo); margin-bottom:30px;">SIGN IN</h2>
-            <form class="login-form">
-                <input type="email" placeholder="EMAIL ADDRESS" required>
-                <input type="password" placeholder="PASSWORD" required>
-                <button type="submit" class="btn-main">LOG IN</button>
-            </form>
-        </div>
-    </div>
-
     <div class="chatbot-container">
         <div class="chatbot-icon" onclick="toggleChatbot()">FitMate</div>
         <div class="chat-window" id="chatWindow">
-            <div class="chat-header">FitMate AI Support</div>
-            <div class="chat-messages">Hello! I'm FitMate. How can I assist your virtual fitting today?</div>
+            <div class="chat-header">
+                <span>FitMate AI Support</span>
+                <div>
+                    <span onclick="expandChatbot()" style="cursor:pointer; margin-right:10px;" title="크게 보기">⛶</span>
+                    <span onclick="toggleChatbot()" style="cursor:pointer;" title="닫기">✖</span>
+                </div>
+            </div>
+            <div class="chat-messages">
+                <p><strong>FitMate:</strong> 안녕하세요! 패션 AI 어시스턴트입니다. 오늘 어떤 스타일을 도와드릴까요?</p>
+            </div>
+            <div class="quick-replies">
+                <button class="quick-btn">내 체형에 맞는 원피스 추천해줘</button>
+                <button class="quick-btn">이 사진이랑 비슷한 옷 찾아줘</button>
+            </div>
             <div class="chat-input">
-                <input type="text" placeholder="Ask anything...">
-                <button class="chat-send-btn">SEND</button>
+                <label for="chatFile" class="chat-upload-label" title="사진 업로드">📎</label>
+                <input type="file" id="chatFile" hidden accept="image/*">
+                <input type="text" placeholder="메시지를 입력하세요...">
+                <button class="chat-send-btn">전송</button>
             </div>
         </div>
     </div>
