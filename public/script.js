@@ -28,7 +28,8 @@ window.onclick = function(event) {
 /* --- 하트(찜) 기능 --- */
 function toggleHeart(element) {
     element.classList.toggle('active');
-    element.innerText = element.classList.contains('active') ? '❤️' : '🤍';
+    // 빈 하트(♡)에서 클릭 시 꽉 찬 까만 하트(♥)로 변경되도록 수정
+    element.innerText = element.classList.contains('active') ? '♥' : '♡';
 }
 
 /* --- [BACKEND] 데이터 바인딩 --- */
@@ -43,6 +44,7 @@ const uniqueFashionPhotos = [
 const productsData = Array.from({ length: 20 }, (_, i) => ({
     id: `item_${i + 1}`,
     name: `FITTING SPACE COLLECTION ${i + 1}`,
+    code: `FS-COL-${String(i + 1).padStart(3, '0')}`, // 상품 코드 자동 생성 로직 추가
     price: `${(Math.floor(Math.random() * 25) + 15) * 1000 + 900} KRW`,
     img: `https://images.unsplash.com/photo-${uniqueFashionPhotos[i]}?auto=format&fit=crop&w=800&q=80`
 }));
@@ -68,6 +70,7 @@ window.onload = function() {
     if (product && document.getElementById('detailTitle')) {
         document.getElementById('detailTitle').innerText = product.name;
         document.getElementById('detailPrice').innerText = product.price;
+        document.getElementById('detailCode').innerText = `PRODUCT CODE: ${product.code}`; // 상세페이지에 코드 표시하는 로직 추가됨
         document.getElementById('detailMainImg').src = product.img;
     }
 };

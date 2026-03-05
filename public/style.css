@@ -16,19 +16,32 @@ body { margin: 0; padding: 0; font-family: var(--font-body); background-color: v
 .nav-right { display: flex; align-items: center; gap: 30px; }
 
 /* 추가된 버튼 스타일 */
+/* AI FITTING STUDIO 버튼 로고 폰트 적용 */
 .nav-btn-studio { 
     background-color: #000; 
     color: #fff; 
     text-decoration: none; 
     font-weight: 700; 
-    font-size: 11px; 
-    letter-spacing: 2px; 
-    text-transform: uppercase; 
+    font-family: var(--font-logo); /* 로고와 동일한 폰트 적용 */
+    font-size: 14px; /* Playfair Display 폰트에 맞게 크기 살짝 키움 */
+    letter-spacing: 1px; 
     padding: 12px 24px; 
     border: 1px solid #000; 
     transition: 0.3s ease; 
 }
 .nav-btn-studio:hover { background-color: #fff; color: #000; }
+
+/* 찜하기(하트) 버튼 심플 스타일 (입체감 없는 플랫 디자인) */
+.favorite-btn {
+    font-size: 26px;
+    cursor: pointer;
+    user-select: none;
+    color: #000; /* 까만색 유지 */
+    transition: transform 0.1s ease;
+}
+.favorite-btn:active {
+    transform: scale(0.8); /* 클릭 시 살짝 눌리는 느낌만 */
+}
 
 .search-container { display: flex; align-items: center; border-bottom: 1px solid #000; padding-bottom: 2px; }
 .search-input { border: none; outline: none; font-size: 11px; width: 120px; text-transform: uppercase; }

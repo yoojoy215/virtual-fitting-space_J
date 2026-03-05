@@ -31,10 +31,12 @@
             <div class="detail-container">
                 <div class="product-detail-left">
                     <img id="detailMainImg" src="" alt="Product" style="width:100%; border:1px solid #eee;">
-                    <div class="title-row">
+                    <div class="title-row" style="margin-bottom: 5px;">
                         <h2 id="detailTitle" style="font-family:var(--font-logo); font-size:28px; margin:0;"></h2>
+                        <span class="favorite-btn" onclick="toggleHeart(this)">♡</span>
                     </div>
-                    <p id="detailPrice" style="color:#888; letter-spacing:1px;"></p>
+                    <p id="detailPrice" style="color:#888; letter-spacing:1px; margin: 0 0 5px 0;"></p>
+                    <p id="detailCode" style="font-size:11px; color:#333; font-weight:700; letter-spacing:1px; margin:0;"></p>
                 </div>
                 
                 <div class="fitting-panel-right">
