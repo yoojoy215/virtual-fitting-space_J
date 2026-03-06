@@ -28,50 +28,79 @@ window.onclick = function(event) {
 /* --- 하트(찜) 기능 --- */
 function toggleHeart(element) {
     element.classList.toggle('active');
-    // 빈 하트(♡)에서 클릭 시 꽉 찬 까만 하트(♥)로 변경되도록 수정
     element.innerText = element.classList.contains('active') ? '♥' : '♡';
 }
 
-/* --- [BACKEND] 데이터 바인딩 --- */
-const uniqueFashionPhotos = [
-    '1515886657613-9f3515b0c78f', '1485230895905-ec40ba36b9bc', '1525507119028-ed4c629a60a3', '1492288991661-058aa541ff43',
-    '1503342217505-b0a15ec3261c', '1539008835657-9e8e9680c956', '1551488831-00ddcb6c6bd3', '1483985988355-763728e1935b',
-    '1487222477894-8943e31ef7b2', '1475180098004-ca77a66827be', '1509631179647-0177331693ae', '1532453288672-3a27e9be9efd',
-    '1509631179647-0177331693ae', '1483985988355-763728e1935b', '1552374196-1ab2a1c593e8', '1506152983158-b4a74a01c721',
-    '1532453288672-3a27e9be9efd', '1506152983158-b4a74a01c721', '1494790108377-be9c29b29330', '1500917293891-ef795e70e1f6'
-];
+/* --- [BACKEND] 데이터 바인딩 (수정됨) --- */
+// 상품을 화면에 그려주는 핵심 함수
+function renderProducts(category = 'all') {
+    const grid = document.querySelector('.product-grid');
+    if (!grid) return; // 메인 페이지가 아니면(detail 페이지 등) 실행 안 함
 
-const productsData = Array.from({ length: 20 }, (_, i) => ({
-    id: `item_${i + 1}`,
-    name: `FITTING SPACE COLLECTION ${i + 1}`,
-    code: `FS-COL-${String(i + 1).padStart(3, '0')}`, // 상품 코드 자동 생성 로직 추가
-    price: `${(Math.floor(Math.random() * 25) + 15) * 1000 + 900} KRW`,
-    img: `https://images.unsplash.com/photo-${uniqueFashionPhotos[i]}?auto=format&fit=crop&w=800&q=80`
-}));
+    // 1. 카테고리에 맞게 데이터 필터링 (pocData는 data.js에서 가져옴)
+    const filteredData = category === 'all' 
+        ? window.pocData 
+        : window.pocData.filter(item => item.category === category);
+
+    // 2. 화면 초기화 후 필터링된 데이터 렌더링
+    grid.innerHTML = filteredData.map(item => `
+        <a href="detail.html?id=${item.id}" class="product-card">
+            <div class="product-image-box">
+                <img src="${item.look_images[0]}" alt="${item.name}">
+            </div>
+            <div class="product-info">
+                <h3>${item.name}</h3>
+                <p style="font-size: 0.8em; color: gray;">${item.style_tags.join(', ')} | ${item.gender.toUpperCase()}</p>
+            </div>
+        </a>
+    `).join('');
+}
 
 window.onload = function() {
-    // 1. 메인 페이지 로드
-    const grid = document.querySelector('.product-grid');
-    if (grid) {
-        grid.innerHTML = productsData.map(item => `
-            <a href="detail.html?id=${item.id}" class="product-card">
-                <div class="product-image-box"><img src="${item.img}" alt="${item.name}"></div>
-                <div class="product-info">
-                    <h3>${item.name}</h3><p>${item.price}</p>
-                </div>
-            </a>
-        `).join('');
+    // 1. 메인 페이지 로드 시 '전체(all)' 상품 렌더링
+    if (typeof renderProducts === 'function') {
+        renderProducts('all');
     }
 
-    // 2. 상세 페이지 로드
+    // 2. 상세 페이지(detail.html) 데이터 로드 로직
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
-    const product = productsData.find(p => p.id === id);
-    if (product && document.getElementById('detailTitle')) {
-        document.getElementById('detailTitle').innerText = product.name;
-        document.getElementById('detailPrice').innerText = product.price;
-        document.getElementById('detailCode').innerText = `PRODUCT CODE: ${product.code}`; // 상세페이지에 코드 표시하는 로직 추가됨
-        document.getElementById('detailMainImg').src = product.img;
+    
+    // id가 있고, pocData가 정상 로드되었다면 실행
+    if (id && typeof window.pocData !== 'undefined') {
+        const product = window.pocData.find(p => p.id === id);
+        if (product) {
+            // [A] 상단 텍스트 및 메인 이미지 세팅
+            if (document.getElementById('detailTitle')) {
+                document.getElementById('detailTitle').innerText = product.name;
+            }
+            if(document.getElementById('detailPrice')) {
+                document.getElementById('detailPrice').innerText = `${product.style_tags.join(', ')} | ${product.gender.toUpperCase()}`;
+            }
+            if(document.getElementById('detailCode')) {
+                document.getElementById('detailCode').innerText = `PRODUCT ID: ${product.id}`;
+            }
+            // 룩북 첫 번째 사진을 메인으로!
+            if(document.getElementById('detailMainImg')) {
+                document.getElementById('detailMainImg').src = product.look_images[0];
+            }
+
+            // [B] 하단에 쇼핑몰처럼 남은 모든 이미지 일괄 나열
+            const detailImagesContainer = document.getElementById('detailImagesContainer');
+            if (detailImagesContainer) {
+                detailImagesContainer.innerHTML = ''; 
+                // look 이미지와 product 이미지 배열 합치기
+                const allImages = [...product.look_images, ...product.product_images];
+                
+                allImages.forEach(imgUrl => {
+                    const imgEl = `
+                        <img src="${imgUrl}" alt="${product.name} 상세 이미지" 
+                             style="max-width: 100%; width: 600px; height: auto; object-fit: cover; display: block;">
+                    `;
+                    detailImagesContainer.insertAdjacentHTML('beforeend', imgEl);
+                });
+            }
+        }
     }
 };
 
@@ -135,7 +164,7 @@ let stream = null;
 async function toggleCamera() {
     const video = document.getElementById('inputCamera');
     const placeholder = document.getElementById('cameraPlaceholder');
-    if (!video) return; // 상세/메인 페이지에서는 작동 안함
+    if (!video) return; 
     
     if (stream) { 
         stream.getTracks().forEach(track => track.stop());
